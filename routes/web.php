@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfilesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TweetsController;
 use App\Http\Controllers\ProfilesControllerController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,11 +21,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function () {
 
-Route::get('/tweets', [TweetsController::class, 'index'])->name('home');
-Route::post('/tweets', [TweetsController::class, 'store']);
+    Route::get('/tweets', [TweetsController::class, 'index'])->name('home');
+    Route::post('/tweets', [TweetsController::class, 'store']);
+
+    Route::post('/profiles/{user:username}/follow', [FollowsController::class, 'store']);
+    Route::get('/profiles/{user:username}/edit', [ProfilesController::class, 'edit'])->middleware('can:edit, user');
+
 });
-Route::get('/profiles/{user:name}',[ProfilesController::class,'show'])->name('profile');
-Route::post('/profiles/{user:name}/follow',[FollowsController::class,'store']);
+Route::get('/profiles/{user:username}', [ProfilesController::class, 'show'])->name('profile');
+
 

@@ -9,17 +9,17 @@
         </div>
 
         <div class="flex">
-            @if(current_user()->is($user))
-            <a href="" class="text-xs rounded-full text-black border border-gray-300 mr-2 py-2 px-2 text-white" type="submit">
+           @can('edit',$user)
+            <a href="{{$user->path('edit')}}" class="text-xs rounded-full text-black border border-gray-300 mr-2 py-2 px-2 text-white" type="submit">
                 Edit Profile
             </a>
-            @endif
+            @endcan
            <x-follow-btn :user="$user"></x-follow-btn>
 
         </div>
     </div>
 <img style="width: 150px;left: calc(50% - 75px);top: 47%;" class="border border-black bg-black absolute mr-2 rounded-full"  src="{{$user->avatar}}" alt="">
 </header>
-    @include('_timeline',['tweets'=>$user->tweets]);
+    @include('_timeline',['tweets'=>$user->tweets])
 
 </x-app>

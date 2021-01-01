@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'username',
     ];
 
     /**
@@ -65,4 +66,9 @@ class User extends Authenticatable
 //    {
 //        return 'name';
 //    }
+
+public function path($append = ''){
+        $path = route('profile',$this->username);
+        return $append ? "{$path}/{$append}" : $path;
+}
 }
