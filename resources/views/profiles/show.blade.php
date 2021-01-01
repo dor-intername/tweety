@@ -1,6 +1,4 @@
-@extends('components.app')
-
-@section('content')
+<x-app>
 <header class="relative">
     <img src="/images/poster.jpeg" class="rounded-lg mb-6" alt="" style="height: 223px;width: 700px;max-width: unset!important;">
 
@@ -10,17 +8,18 @@
             <p class="text-sm">Joined {{$user->created_at->diffForHumans()}}</p>
         </div>
 
-        <div>
+        <div class="flex">
+            @if(current_user()->is($user))
             <a href="" class="text-xs rounded-full text-black border border-gray-300 mr-2 py-2 px-2 text-white" type="submit">
                 Edit Profile
             </a>
-            <a href="" class="bg-blue-500 text-xs rounded-full shadow py-2 px-2 text-white" type="submit">
-               Follow Me
-            </a>
+            @endif
+           <x-follow-btn :user="$user"></x-follow-btn>
+
         </div>
     </div>
 <img style="width: 150px;left: calc(50% - 75px);top: 47%;" class="border border-black bg-black absolute mr-2 rounded-full"  src="{{$user->avatar}}" alt="">
 </header>
     @include('_timeline',['tweets'=>$user->tweets]);
 
-@endsection
+</x-app>
