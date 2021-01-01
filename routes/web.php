@@ -26,8 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/tweets', [TweetsController::class, 'index'])->name('home');
     Route::post('/tweets', [TweetsController::class, 'store']);
 
+    Route::get('/profiles/{user:username}/edit', [ProfilesController::class, 'edit'])->middleware('can:edit,user');
+
     Route::post('/profiles/{user:username}/follow', [FollowsController::class, 'store']);
-    Route::get('/profiles/{user:username}/edit', [ProfilesController::class, 'edit'])->middleware('can:edit, user');
 
 });
 Route::get('/profiles/{user:username}', [ProfilesController::class, 'show'])->name('profile');
