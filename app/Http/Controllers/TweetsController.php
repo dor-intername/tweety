@@ -20,6 +20,6 @@ class TweetsController extends Controller
             'body'=>$attribute['body']
         ]);
 
-        return redirect('/home');
+        return redirect(route('home'));
     }
 }
