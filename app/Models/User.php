@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'avatar',
         'password',
         'username',
     ];
@@ -43,9 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getAvatarAttribute(): string
+    public function setPasswordAttribute($value){
+      return $this->attributes['password'] =bcrypt($value);
+    }
+
+    public function getAvatarAttribute($value): string
     {
-        return 'https://robohash.org/' . $this->name;
+        return asset($value ?: '/avatars/tdtNbP24REuR1R3e2Och5tShKKCKDNmhWFXC0NAp.jpg');
     }
 
     public function timeline()

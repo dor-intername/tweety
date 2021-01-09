@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\FollowsController;
 use App\Http\Controllers\ProfilesController;
 use Illuminate\Support\Facades\Route;
@@ -17,21 +18,24 @@ use App\Http\Controllers\ProfilesControllerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Auth::routes();
 Route::middleware('auth')->group(function () {
 
     Route::get('/tweets', [TweetsController::class, 'index'])->name('home');
     Route::post('/tweets', [TweetsController::class, 'store']);
 
-    Route::get('/profiles/{user:username}/edit', [ProfilesController::class, 'edit'])->middleware('can:edit,user');
+Route::middleware('can:edit,user')->group(function(){
+
+    Route::get('/profiles/{user:username}/edit', [ProfilesController::class, 'edit']);
     Route::patch('/profiles/{user:username}', [ProfilesController::class, 'update']);
+});
 
     Route::post('/profiles/{user:username}/follow', [FollowsController::class, 'store']);
 
+
 });
 Route::get('/profiles/{user:username}', [ProfilesController::class, 'show'])->name('profile');
+Route::get('/explore', [ExploreController::class, 'show'])->name('explore');
 
 
